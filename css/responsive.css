@@ -1,0 +1,274 @@
+/* ==========================================================================
+   VANTA — Responsive Breakpoints & Mobile Optimization
+   ========================================================================== */
+
+/* Laptop / Desktop medium screens (max 1200px) */
+@media (max-width: 1200px) {
+  .hero-container {
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  
+  .product-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .collections-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+
+  .trust-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+}
+
+/* Tablet screens (max 992px) */
+@media (max-width: 992px) {
+  .vanta-nav {
+    padding: 0 24px;
+  }
+
+  .nav-links {
+    display: none; /* Hidden on tablet & mobile; accessible via mobile menu drawer */
+  }
+
+  .mobile-menu-toggle {
+    display: flex;
+  }
+
+  .hero-container {
+    grid-template-columns: 1fr;
+    text-align: center;
+    padding-top: 40px;
+    min-height: auto;
+  }
+
+  .hero-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .hero-description {
+    max-width: 100%;
+  }
+
+  .hero-cta-group {
+    justify-content: center;
+  }
+
+  .hero-specs-row {
+    justify-content: center;
+  }
+
+  .sneaker-3d-wrapper {
+    height: 440px;
+  }
+
+  .story-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .story-pillars {
+    grid-template-columns: 1fr;
+  }
+
+  .collections-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .collection-card {
+    height: 360px;
+  }
+
+  .footer-container {
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+  }
+
+  .quickview-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .quickview-image-side {
+    padding: 20px;
+  }
+
+  .quickview-info-side {
+    padding: 28px;
+  }
+
+  .checkout-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Mobile Phones (max 768px) */
+@media (max-width: 768px) {
+  :root {
+    --nav-height: 68px;
+  }
+
+  .vanta-nav {
+    padding: 0 16px;
+  }
+
+  .hero-section {
+    padding-top: calc(var(--nav-height) + 20px);
+  }
+
+  .hero-container {
+    padding: 0 16px;
+  }
+
+  .hero-title {
+    font-size: 2.2rem;
+  }
+
+  .hero-description {
+    font-size: 0.95rem;
+    margin-bottom: 28px;
+  }
+
+  .hero-cta-group {
+    flex-direction: column;
+    width: 100%;
+    gap: 12px;
+  }
+
+  .hero-cta-group .btn {
+    width: 100%;
+  }
+
+  .hero-specs-row {
+    gap: 16px;
+    width: 100%;
+    justify-content: space-around;
+  }
+
+  .spec-value {
+    font-size: 0.95rem;
+  }
+
+  .sneaker-3d-wrapper {
+    height: 360px;
+  }
+
+  /* Catalog Controls */
+  .catalog-section {
+    padding: 60px 16px;
+  }
+
+  .catalog-controls {
+    padding: 16px;
+  }
+
+  .catalog-controls-top, .catalog-controls-bottom {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .category-filters-group {
+    justify-content: center;
+  }
+
+  .catalog-search-wrap {
+    width: 100%;
+  }
+
+  .size-filters-group {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .sort-select-wrap select {
+    width: 100%;
+  }
+
+  /* 2 Column Mobile Catalog Grid */
+  .product-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  .product-card-content {
+    padding: 14px;
+  }
+
+  .product-card-title {
+    font-size: 0.95rem;
+  }
+
+  .product-card-price {
+    font-size: 0.95rem;
+  }
+
+  .product-card-overlay-actions {
+    display: none; /* Hide hover quickview on touch, tapping card opens quick view directly */
+  }
+
+  /* Trust section */
+  .trust-section {
+    padding: 60px 16px;
+  }
+
+  .trust-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  /* Footer */
+  .vanta-footer {
+    padding: 60px 16px 30px 16px;
+  }
+
+  .footer-container {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    gap: 12px;
+    text-align: center;
+  }
+
+  /* Drawers */
+  .drawer {
+    max-width: 100%;
+  }
+
+  .drawer-header {
+    padding: 16px 20px;
+  }
+
+  .drawer-body {
+    padding: 20px;
+  }
+
+  .drawer-footer {
+    padding: 16px 20px;
+  }
+
+  /* Modals */
+  .modal {
+    width: 95%;
+    max-height: 95vh;
+    border-radius: var(--radius-md);
+  }
+
+  .quickview-info-side, .checkout-modal-inner {
+    padding: 20px;
+  }
+}
+
+/* Extra small devices (max 420px) */
+@media (max-width: 420px) {
+  .product-grid {
+    grid-template-columns: 1fr; /* Single column on tiny screens */
+  }
+}

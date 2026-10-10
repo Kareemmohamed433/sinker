@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VANTA — Premium 3D Sneaker E-Commerce</title>
+  <meta name="description" content="Cinematic luxury sneaker e-commerce website for VANTA. Built to break the ordinary with 3D footwear interactive experiences and premium street culture design." />
+  <meta name="theme-color" content="#070709" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@500;700;800&display=swap" rel="stylesheet" />
+
+  <!-- External Libraries (CDNs) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Custom Stylesheets -->
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+</head>
+<body class="intro-active">
+
+  <!-- ==========================================================================
+       1. CINEMATIC INTRO OVERLAY
+       ========================================================================== -->
+  <div id="intro-overlay" class="intro-overlay">
+    <canvas id="intro-particles" class="intro-particles-canvas"></canvas>
+    <div id="intro-light-beam" class="intro-light-beam"></div>
+
+    <div class="intro-content">
+      <div class="intro-wordmark">
+        <span class="intro-logo-letter">V</span>
+        <span class="intro-logo-letter">A</span>
+        <span class="intro-logo-letter">N</span>
+        <span class="intro-logo-letter">T</span>
+        <span class="intro-logo-letter">A</span>
+        <div id="intro-wordmark-sweep" class="intro-wordmark-sweep"></div>
+      </div>
+    </div>
+
+    <button type="button" id="skip-intro-btn" class="skip-intro-btn">
+      SKIP INTRO <i data-lucide="chevron-right"></i>
+    </button>
+  </div>
+
+  <!-- ==========================================================================
+       2. NAVIGATION BAR
+       ========================================================================== -->
+  <header class="vanta-nav">
+    <a href="#" class="nav-brand">VANTA</a>
+
+    <nav>
+      <ul class="nav-links">
+        <li><a href="#hero" class="nav-link">Home</a></li>
+        <li><a href="#catalog" class="nav-link">New Arrivals</a></li>
+        <li><a href="#catalog" class="nav-link">Sneakers</a></li>
+        <li><a href="#collections" class="nav-link">Collections</a></li>
+        <li><a href="#brand-story" class="nav-link">About</a></li>
+      </ul>
+    </nav>
+
+    <div class="nav-actions">
+      <button type="button" class="icon-btn open-search-btn" aria-label="Search">
+        <i data-lucide="search"></i>
+      </button>
+
+      <button type="button" class="icon-btn open-wishlist-btn" aria-label="Wishlist">
+        <i data-lucide="heart"></i>
+        <span class="badge-count wishlist-count-badge" style="display: none;">0</span>
+      </button>
+
+      <button type="button" class="icon-btn open-cart-btn" aria-label="Shopping Bag">
+        <i data-lucide="shopping-bag"></i>
+        <span class="badge-count cart-count-badge" style="display: none;">0</span>
+      </button>
+
+      <button type="button" id="mobile-menu-btn" class="icon-btn mobile-menu-toggle" aria-label="Open Mobile Menu">
+        <i data-lucide="menu"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile Menu Drawer -->
+  <div id="mobile-menu-overlay" class="overlay"></div>
+  <div id="mobile-menu-drawer" class="drawer">
+    <div class="drawer-header">
+      <span class="nav-brand">VANTA</span>
+      <button type="button" id="close-mobile-menu-btn" class="icon-btn" aria-label="Close menu">
+        <i data-lucide="x"></i>
+      </button>
+    </div>
+    <div class="drawer-body">
+      <ul class="mobile-nav-links" style="list-style: none; display: flex; flex-direction: column; gap: 24px;">
+        <li><a href="#hero" class="mobile-nav-link" style="font-family: var(--font-display); font-size: 1.5rem;">Home</a></li>
+        <li><a href="#catalog" class="mobile-nav-link" style="font-family: var(--font-display); font-size: 1.5rem;">New Arrivals</a></li>
+        <li><a href="#catalog" class="mobile-nav-link" style="font-family: var(--font-display); font-size: 1.5rem;">Sneakers</a></li>
+        <li><a href="#collections" class="mobile-nav-link" style="font-family: var(--font-display); font-size: 1.5rem;">Collections</a></li>
+        <li><a href="#brand-story" class="mobile-nav-link" style="font-family: var(--font-display); font-size: 1.5rem;">About VANTA</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       3. HOMEPAGE HERO SECTION WITH 3D SNEAKER
+       ========================================================================== -->
+  <section id="hero" class="hero-section">
+    <div class="hero-container">
+      
+      <!-- Hero Copy -->
+      <div class="hero-content gsap-fade-up">
+        <div class="hero-subtitle-badge">
+          <span class="dot"></span>
+          <span>VANTA ARCHIVE v3.0</span>
+        </div>
+        <h1 class="hero-title">BUILT TO BREAK THE ORDINARY.</h1>
+        <p class="hero-description">Engineered for movement. Designed to stand apart.</p>
+
+        <div class="hero-cta-group">
+          <a href="#catalog" class="btn btn-accent">
+            EXPLORE COLLECTION <i data-lucide="arrow-right"></i>
+          </a>
+          <a href="#brand-story" class="btn btn-outline">
+            DISCOVER VANTA
+          </a>
+        </div>
+
+        <div class="hero-specs-row">
+          <div class="spec-item">
+            <span class="spec-value">CARBON PLATE V3</span>
+            <span class="spec-label">TORSIO SHANK</span>
+          </div>
+          <div class="spec-item">
+            <span class="spec-value">OBSIDIAN KNIT</span>
+            <span class="spec-label">HIGH-DENSITY MESH</span>
+          </div>
+          <div class="spec-item">
+            <span class="spec-value">290 GRAMS</span>
+            <span class="spec-label">ULTRALIGHT FORM</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3D Sneaker Canvas Showcase -->
+      <div id="sneaker-3d-container" class="sneaker-3d-wrapper">
+        <div id="sneaker-loading" class="sneaker-loading-spinner">
+          <div class="spinner-ring"></div>
+          <span id="sneaker-loading-text" class="hero-subtitle-badge" style="margin-bottom:0;">INITIALIZING 3D SNEAKER...</span>
+        </div>
+
+        <canvas id="sneaker-canvas"></canvas>
+
+        <div class="sneaker-3d-hint">
+          <i data-lucide="move-3d"></i>
+          <span>DRAG TO ROTATE 3D SNEAKER</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       4. PRODUCT CATALOG SECTION
+       ========================================================================== -->
+  <section id="catalog" class="catalog-section">
+    <div class="section-header gsap-fade-up">
+      <span class="section-tag">THE COLLECTION</span>
+      <h2 class="section-title">FIND YOUR NEXT ESSENTIAL.</h2>
+      <p class="section-description">Precision craftsmanship meet futuristic streetwear silhouettes. Select your pair below.</p>
+    </div>
+
+    <!-- Filter Controls Bar -->
+    <div class="catalog-controls gsap-fade-up">
+      <div class="catalog-controls-top">
+        <div class="category-filters-group">
+          <button type="button" class="category-filter-btn active" data-category="ALL">ALL SNEAKERS</button>
+          <button type="button" class="category-filter-btn" data-category="CORE">CORE SILHOUETTES</button>
+          <button type="button" class="category-filter-btn" data-category="PERFORMANCE">PERFORMANCE</button>
+          <button type="button" class="category-filter-btn" data-category="STREET">STREET SERIES</button>
+        </div>
+
+        <div class="catalog-search-wrap">
+          <input type="text" class="catalog-search-input" placeholder="Search by sneaker name..." />
+          <i data-lucide="search" class="search-icon-inside"></i>
+        </div>
+      </div>
+
+      <div class="catalog-controls-bottom">
+        <div class="size-filters-group">
+          <span class="size-filter-label">SIZE:</span>
+          <button type="button" class="size-filter-pill" data-size="39">39</button>
+          <button type="button" class="size-filter-pill" data-size="40">40</button>
+          <button type="button" class="size-filter-pill" data-size="41">41</button>
+          <button type="button" class="size-filter-pill" data-size="42">42</button>
+          <button type="button" class="size-filter-pill" data-size="43">43</button>
+          <button type="button" class="size-filter-pill" data-size="44">44</button>
+          <button type="button" class="size-filter-pill" data-size="45">45</button>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 16px;">
+          <div class="sort-select-wrap">
+            <select id="catalog-sort-select" aria-label="Sort sneakers">
+              <option value="featured">SORT BY: FEATURED</option>
+              <option value="price-asc">PRICE: LOW TO HIGH</option>
+              <option value="price-desc">PRICE: HIGH TO LOW</option>
+              <option value="newest">NEWEST RELEASES</option>
+            </select>
+          </div>
+
+          <button type="button" class="btn btn-sm btn-outline reset-filters-btn">
+            RESET <i data-lucide="rotate-ccw"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Product Count & Catalog Grid -->
+    <div style="margin-bottom: 24px; font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-muted);">
+      SHOWING <span id="catalog-count" style="color: var(--accent-white); font-weight: 700;">8 SNEAKERS</span>
+    </div>
+
+    <div id="product-grid" class="product-grid">
+      <!-- Injected dynamically via catalog.js -->
+    </div>
+
+    <div id="catalog-empty-state" class="catalog-empty-state">
+      <i data-lucide="package-search" style="width: 48px; height: 48px; color: var(--text-dim); margin-bottom: 16px;"></i>
+      <h3 style="font-family: var(--font-display); margin-bottom: 8px;">NO MATCHING SNEAKERS FOUND</h3>
+      <p style="color: var(--text-muted); margin-bottom: 24px;">Try adjusting your filters or search query.</p>
+      <button type="button" class="btn btn-outline reset-filters-btn">RESET ALL FILTERS</button>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       5. BRAND STORY SECTION
+       ========================================================================== -->
+  <section id="brand-story" class="brand-story-section">
+    <div class="story-container">
+      <div class="story-grid">
+        <div class="story-content gsap-fade-up">
+          <span class="section-tag">BRAND PHILOSOPHY</span>
+          <h2 class="story-title">MADE TO MOVE DIFFERENT.</h2>
+          <p class="story-lead">VANTA is built around movement, individuality, and modern street culture.</p>
+          <p class="story-text">Every sneaker model in our archive is designed with meticulous geometry, luxury materials, and carbon-reinforced soles. We reject generic mass-market design in favor of high-contrast, obsidian aesthetic language.</p>
+
+          <div class="story-pillars">
+            <div class="pillar-card">
+              <span class="pillar-num">01</span>
+              <h4 class="pillar-title">AERODYNAMIC</h4>
+              <p class="pillar-desc">Streamlined low-drag profiles engineered for fluid movement.</p>
+            </div>
+            <div class="pillar-card">
+              <span class="pillar-num">02</span>
+              <h4 class="pillar-title">CARBON SHANK</h4>
+              <p class="pillar-desc">Carbon fiber shank plates providing ultimate torsion control.</p>
+            </div>
+            <div class="pillar-card">
+              <span class="pillar-num">03</span>
+              <h4 class="pillar-title">OBSIDIAN FORM</h4>
+              <p class="pillar-desc">Deep charcoal and high-contrast brushed metallic accents.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="story-image-wrap gsap-fade-up">
+          <img src="assets/images/vanta_phantom.jpg" alt="VANTA Editorial Showcase" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       6. FEATURED COLLECTIONS
+       ========================================================================== -->
+  <section id="collections" class="collections-section">
+    <div class="section-header gsap-fade-up">
+      <span class="section-tag">ARCHIVE DIVISIONS</span>
+      <h2 class="section-title">FEATURED COLLECTIONS</h2>
+    </div>
+
+    <div class="collections-grid gsap-stagger-group">
+      <div class="collection-card category-filter-btn" data-category="CORE">
+        <img src="assets/images/vanta_core.jpg" alt="Core Essentials Collection" class="collection-card-bg" />
+        <div class="collection-card-overlay">
+          <h3 class="collection-card-title">CORE ESSENTIALS</h3>
+          <p class="collection-card-desc">Monolithic stealth silhouettes for everyday street dominance.</p>
+          <span class="btn btn-sm btn-outline">DISCOVER CORE <i data-lucide="arrow-right"></i></span>
+        </div>
+      </div>
+
+      <div class="collection-card category-filter-btn" data-category="PERFORMANCE">
+        <img src="assets/images/vanta_motion.jpg" alt="Performance Collection" class="collection-card-bg" />
+        <div class="collection-card-overlay">
+          <h3 class="collection-card-title">PERFORMANCE</h3>
+          <p class="collection-card-desc">Kinetic runners with RIDE-X foam and ultra-light mesh.</p>
+          <span class="btn btn-sm btn-outline">DISCOVER PERFORMANCE <i data-lucide="arrow-right"></i></span>
+        </div>
+      </div>
+
+      <div class="collection-card category-filter-btn" data-category="STREET">
+        <img src="assets/images/vanta_shadow.jpg" alt="Street Series Collection" class="collection-card-bg" />
+        <div class="collection-card-overlay">
+          <h3 class="collection-card-title">STREET SERIES</h3>
+          <p class="collection-card-desc">Architectural high-tops and limited edition high-tech silhouettes.</p>
+          <span class="btn btn-sm btn-outline">DISCOVER STREET <i data-lucide="arrow-right"></i></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       7. TRUST & SERVICE INFORMATION
+       ========================================================================== -->
+  <section class="trust-section">
+    <div class="trust-grid">
+      <div class="trust-item">
+        <div class="trust-icon"><i data-lucide="truck"></i></div>
+        <div>
+          <h4 class="trust-title">EXPRESS DELIVERY</h4>
+          <p class="trust-desc">Fast nationwide courier delivery across Egypt with live tracking.</p>
+        </div>
+      </div>
+
+      <div class="trust-item">
+        <div class="trust-icon"><i data-lucide="refresh-cw"></i></div>
+        <div>
+          <h4 class="trust-title">30-DAY RETURNS</h4>
+          <p class="trust-desc">Hassle-free exchange policy for perfect sizing and peace of mind.</p>
+        </div>
+      </div>
+
+      <div class="trust-item">
+        <div class="trust-icon"><i data-lucide="shield-check"></i></div>
+        <div>
+          <h4 class="trust-title">100% AUTHENTIC</h4>
+          <p class="trust-desc">Guaranteed original VANTA footwear with individual serial tags.</p>
+        </div>
+      </div>
+
+      <div class="trust-item">
+        <div class="trust-icon"><i data-lucide="headphones"></i></div>
+        <div>
+          <h4 class="trust-title">24/7 CONCIERGE</h4>
+          <p class="trust-desc">Dedicated luxury support team ready to assist your order.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       8. FOOTER
+       ========================================================================== -->
+  <footer class="vanta-footer">
+    <div class="footer-container">
+      <div class="footer-brand-col">
+        <h2 class="footer-brand-title">VANTA</h2>
+        <p class="footer-brand-desc">Architectural footwear engineered for street culture and kinetic movement.</p>
+
+        <form id="newsletter-form" class="footer-newsletter-form">
+          <input type="email" class="footer-newsletter-input" placeholder="Enter your email for VIP drops..." required />
+          <button type="submit" class="btn btn-accent btn-sm">JOIN</button>
+        </form>
+      </div>
+
+      <div>
+        <h4 class="footer-column-title">SHOP</h4>
+        <ul class="footer-links">
+          <li><a href="#catalog" class="footer-link">All Sneakers</a></li>
+          <li><a href="#catalog" class="footer-link">Core Essentials</a></li>
+          <li><a href="#catalog" class="footer-link">Performance Series</a></li>
+          <li><a href="#catalog" class="footer-link">Street Series</a></li>
+          <li><a href="#catalog" class="footer-link">Limited Edition</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="footer-column-title">INFORMATION</h4>
+        <ul class="footer-links">
+          <li><a href="#brand-story" class="footer-link">Brand Story</a></li>
+          <li><a href="#" class="footer-link">Delivery & Returns</a></li>
+          <li><a href="#" class="footer-link">Size Guide</a></li>
+          <li><a href="#" class="footer-link">Privacy Policy</a></li>
+          <li><a href="#" class="footer-link">Terms of Service</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="footer-column-title">CONNECT</h4>
+        <ul class="footer-links">
+          <li><a href="#" class="footer-link">Instagram</a></li>
+          <li><a href="#" class="footer-link">TikTok</a></li>
+          <li><a href="#" class="footer-link">YouTube</a></li>
+          <li><a href="#" class="footer-link">Discord Community</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span>&copy; <span id="copyright-year">2026</span> VANTA LABS INC. ALL RIGHTS RESERVED.</span>
+      <span>VANTA LUXURY FOOTWEAR DEMO</span>
+    </div>
+  </footer>
+
+  <!-- ==========================================================================
+       9. MODALS & DRAWERS
+       ========================================================================== -->
+
+  <!-- Quick View Modal -->
+  <div id="quick-view-overlay" class="overlay"></div>
+  <div id="quick-view-modal" class="modal">
+    <button type="button" class="modal-close-btn close-quickview-btn" aria-label="Close modal">
+      <i data-lucide="x"></i>
+    </button>
+    <div class="quickview-grid">
+      <div class="quickview-image-side">
+        <img id="qv-img" src="" alt="Sneaker Preview" />
+      </div>
+      <div class="quickview-info-side">
+        <h2 id="qv-name" class="qv-title">SNEAKER NAME</h2>
+        <p id="qv-subtitle" class="qv-sub">SUBTITLE</p>
+        <div id="qv-price" class="qv-price">EGP 0</div>
+        <p id="qv-desc" style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 24px;"></p>
+
+        <span class="qv-label">SELECT COLOR:</span>
+        <div id="qv-colors-container" class="qv-colors-group"></div>
+
+        <span class="qv-label">SELECT EU SIZE:</span>
+        <div id="qv-sizes-container" class="qv-sizes-grid"></div>
+        <div id="qv-size-warning" class="qv-warning-msg">PLEASE SELECT A SIZE BEFORE ADDING TO BAG.</div>
+
+        <div class="qv-actions-row">
+          <div class="cart-item-qty">
+            <button type="button" class="qty-btn minus qv-qty-btn">-</button>
+            <span id="qv-qty-val" class="qty-val">1</span>
+            <button type="button" class="qty-btn plus qv-qty-btn">+</button>
+          </div>
+
+          <button type="button" id="qv-add-to-cart-btn" class="btn btn-accent" style="flex-grow: 1;">
+            ADD TO BAG <i data-lucide="shopping-bag"></i>
+          </button>
+
+          <button type="button" id="qv-wishlist-btn" class="icon-btn" style="border: 1px solid var(--border-subtle);">
+            <i data-lucide="heart"></i>
+          </button>
+        </div>
+
+        <ul id="qv-features-list" style="margin-top: 24px; font-size: 0.75rem; color: var(--text-muted); list-style: none; display: flex; flex-direction: column; gap: 6px;"></ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cart Drawer -->
+  <div id="cart-overlay" class="overlay"></div>
+  <div id="cart-drawer" class="drawer">
+    <div class="drawer-header">
+      <h3 class="drawer-title">YOUR SHOPPING BAG</h3>
+      <button type="button" class="icon-btn close-cart-btn" aria-label="Close cart">
+        <i data-lucide="x"></i>
+      </button>
+    </div>
+
+    <div class="drawer-body">
+      <div id="cart-empty-state" style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; text-align: center;">
+        <i data-lucide="shopping-bag" style="width: 56px; height: 56px; color: var(--text-dim); margin-bottom: 16px;"></i>
+        <h4 style="font-family: var(--font-display); margin-bottom: 8px;">YOUR BAG IS EMPTY</h4>
+        <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 24px;">Explore our collection to find your pair.</p>
+        <a href="#catalog" class="btn btn-outline close-cart-btn">SHOP COLLECTION</a>
+      </div>
+
+      <div id="cart-items-list"></div>
+    </div>
+
+    <div id="cart-footer" class="drawer-footer">
+      <form id="cart-promo-form" style="display: flex; gap: 8px; margin-bottom: 16px;">
+        <input type="text" id="promo-input" placeholder="Promo code (e.g. VANTA10)" class="form-input" style="padding: 8px 12px; font-size: 0.8rem;" />
+        <button type="submit" class="btn btn-sm btn-outline">APPLY</button>
+      </form>
+
+      <div class="cart-subtotal-row">
+        <span>SUBTOTAL</span>
+        <span id="cart-subtotal">EGP 0</span>
+      </div>
+
+      <div class="cart-total-row">
+        <span>TOTAL</span>
+        <span id="cart-total">EGP 0</span>
+      </div>
+
+      <button type="button" class="btn btn-accent open-checkout-btn" style="width: 100%;">
+        PROCEED TO CHECKOUT <i data-lucide="arrow-right"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Wishlist Drawer -->
+  <div id="wishlist-overlay" class="overlay"></div>
+  <div id="wishlist-drawer" class="drawer">
+    <div class="drawer-header">
+      <h3 class="drawer-title">SAVED SNEAKERS</h3>
+      <button type="button" class="icon-btn close-wishlist-btn" aria-label="Close wishlist">
+        <i data-lucide="x"></i>
+      </button>
+    </div>
+
+    <div class="drawer-body">
+      <div id="wishlist-empty-state" style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; text-align: center;">
+        <i data-lucide="heart" style="width: 56px; height: 56px; color: var(--text-dim); margin-bottom: 16px;"></i>
+        <h4 style="font-family: var(--font-display); margin-bottom: 8px;">YOUR WISHLIST IS EMPTY</h4>
+        <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 24px;">Save your favorite sneakers for later.</p>
+        <a href="#catalog" class="btn btn-outline close-wishlist-btn">EXPLORE SNEAKERS</a>
+      </div>
+
+      <div id="wishlist-items-list"></div>
+    </div>
+  </div>
+
+  <!-- Checkout Modal -->
+  <div id="checkout-overlay" class="overlay"></div>
+  <div id="checkout-modal" class="modal" style="max-width: 960px;">
+    <button type="button" class="modal-close-btn close-checkout-btn" aria-label="Close checkout">
+      <i data-lucide="x"></i>
+    </button>
+
+    <div class="checkout-modal-inner">
+      <!-- Checkout Form View -->
+      <div id="checkout-form-container">
+        <h2 style="font-family: var(--font-display); font-size: 1.8rem; margin-bottom: 8px;">VANTA DEMO CHECKOUT</h2>
+        <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 32px;">This is a demonstration checkout. No actual payments or credit cards are processed.</p>
+
+        <form id="checkout-form">
+          <div class="checkout-grid">
+            <div>
+              <h4 style="font-family: var(--font-mono); font-size: 0.8rem; letter-spacing: 0.15em; color: var(--accent-white); margin-bottom: 16px;">DELIVERY INFORMATION</h4>
+
+              <div class="form-group">
+                <label class="form-label">FULL NAME *</label>
+                <input type="text" id="checkout-name" class="form-input" placeholder="e.g. Omar Hassan" required />
+              </div>
+
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                <div class="form-group">
+                  <label class="form-label">EMAIL ADDRESS *</label>
+                  <input type="email" id="checkout-email" class="form-input" placeholder="omar@example.com" required />
+                </div>
+                <div class="form-group">
+                  <label class="form-label">PHONE NUMBER *</label>
+                  <input type="tel" id="checkout-phone" class="form-input" placeholder="+20 100 000 0000" required />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">STREET ADDRESS *</label>
+                <input type="text" id="checkout-address" class="form-input" placeholder="Building, Street, District" required />
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">CITY / GOVERNORATE *</label>
+                <input type="text" id="checkout-city" class="form-input" placeholder="Cairo" required />
+              </div>
+            </div>
+
+            <div>
+              <h4 style="font-family: var(--font-mono); font-size: 0.8rem; letter-spacing: 0.15em; color: var(--accent-white); margin-bottom: 16px;">ORDER SUMMARY</h4>
+
+              <div class="checkout-summary-box">
+                <div id="checkout-summary-items" style="max-height: 220px; overflow-y: auto; margin-bottom: 16px;"></div>
+
+                <div class="cart-subtotal-row">
+                  <span>SUBTOTAL</span>
+                  <span id="checkout-subtotal">EGP 0</span>
+                </div>
+                <div class="cart-subtotal-row">
+                  <span>SHIPPING</span>
+                  <span style="color: #00ff88; font-weight: 700;">FREE EXPRESS</span>
+                </div>
+                <div class="cart-total-row" style="margin-top: 16px; border-top: 1px solid var(--border-subtle); padding-top: 16px;">
+                  <span>TOTAL</span>
+                  <span id="checkout-total">EGP 0</span>
+                </div>
+
+                <button type="submit" class="btn btn-accent" style="width: 100%; margin-top: 16px;">
+                  PLACE DEMO ORDER <i data-lucide="check-circle"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <!-- Confirmation Screen View -->
+      <div id="checkout-confirmation" style="display: none; text-align: center; padding: 40px 20px;">
+        <div style="width: 64px; height: 64px; border-radius: 50%; background: rgba(0, 255, 136, 0.1); border: 1px solid #00ff88; color: #00ff88; display: flex; align-items: center; justify-content: center; margin: 0 auto 24px auto;">
+          <i data-lucide="check" style="width: 32px; height: 32px;"></i>
+        </div>
+
+        <h2 style="font-family: var(--font-display); font-size: 2.2rem; margin-bottom: 8px;">ORDER CONFIRMED</h2>
+        <p style="color: var(--text-muted); margin-bottom: 24px;">Thank you for testing the VANTA luxury sneaker experience.</p>
+
+        <div style="max-width: 480px; margin: 0 auto 32px auto; padding: 24px; background: var(--bg-dark); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); text-align: left;">
+          <div style="display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 0.8rem; margin-bottom: 16px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 12px;">
+            <span>REF: <strong id="confirm-order-ref" style="color: var(--accent-white);">VN-000000</strong></span>
+            <span id="confirm-order-date" style="color: var(--text-dim);">DATE</span>
+          </div>
+
+          <div id="confirm-customer-info" style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;"></div>
+
+          <div id="confirm-items-list" style="font-size: 0.85rem; margin-bottom: 16px; display: flex; flex-direction: column; gap: 8px;"></div>
+
+          <div style="display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 1.1rem; font-weight: 700; border-top: 1px solid var(--border-subtle); padding-top: 12px; color: var(--accent-white);">
+            <span>FINAL TOTAL:</span>
+            <span id="confirm-order-total">EGP 0</span>
+          </div>
+        </div>
+
+        <button type="button" id="confirm-return-btn" class="btn btn-accent">
+          RETURN TO STORE <i data-lucide="arrow-right"></i>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Search Modal -->
+  <div id="search-modal-overlay" class="overlay"></div>
+  <div id="search-modal" class="modal" style="max-width: 600px;">
+    <button type="button" id="close-search-btn" class="modal-close-btn" aria-label="Close search">
+      <i data-lucide="x"></i>
+    </button>
+    <div style="padding: 40px;">
+      <h3 style="font-family: var(--font-display); margin-bottom: 16px;">SEARCH VANTA ARCHIVE</h3>
+      <div class="catalog-search-wrap">
+        <input type="text" id="header-search-input" class="catalog-search-input" placeholder="Type sneaker model (e.g. Core, Shadow, Phantom)..." />
+        <i data-lucide="search" class="search-icon-inside"></i>
+      </div>
+    </div>
+  </div>
+
+  <!-- Custom App Scripts -->
+  <script src="js/products.js"></script>
+  <script src="js/sneaker3d.js"></script>
+  <script src="js/intro.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/wishlist.js"></script>
+  <script src="js/catalog.js"></script>
+  <script src="js/checkout.js"></script>
+  <script src="js/main.js"></script>
+
+</body>
+</html>

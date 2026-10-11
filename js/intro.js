@@ -1,6 +1,8 @@
 /**
- * VANTA Cinematic Intro Reveal Timeline
+ * VANTA Cinematic Intro Reveal Timeline — Mobile Responsive Edition
  * GSAP Powered 4-Scene Synchronized Sequence
+ * Features: Dynamic dvh Viewport Adaptability, 60fps Mobile Particle Count, 
+ * Responsive Letter Stagger, Tap-Friendly Skip Control & Reduced Motion Support.
  */
 
 class VantaCinematicIntro {
@@ -12,6 +14,8 @@ class VantaCinematicIntro {
     this.particleCtx = this.particleCanvas ? this.particleCanvas.getContext('2d') : null;
     this.particles = [];
     this.animatingParticles = true;
+    this.animFrameId = null;
+    this.isMobile = window.innerWidth < 768;
 
     this.init();
   }
@@ -19,7 +23,7 @@ class VantaCinematicIntro {
   init() {
     if (!this.introOverlay) return;
 
-    // Check prefers-reduced-motion
+    // Check prefers-reduced-motion and sessionStorage
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const sessionSeen = sessionStorage.getItem('vanta_intro_seen');
 
@@ -39,27 +43,29 @@ class VantaCinematicIntro {
     const resize = () => {
       this.particleCanvas.width = window.innerWidth;
       this.particleCanvas.height = window.innerHeight;
+      this.isMobile = window.innerWidth < 768;
     };
     resize();
     window.addEventListener('resize', resize);
 
-    const count = Math.min(window.innerWidth < 768 ? 25 : 60, 60);
+    // Optimized mobile particle count for 60fps rendering without GPU heat
+    const count = this.isMobile ? 18 : 50;
     this.particles = [];
     for (let i = 0; i < count; i++) {
       this.particles.push({
         x: Math.random() * window.innerWidth,
         y: Math.random() * window.innerHeight,
-        size: Math.random() * 1.8 + 0.5,
-        speedX: (Math.random() - 0.5) * 0.4,
-        speedY: (Math.random() - 0.5) * 0.4 - 0.2,
-        alpha: Math.random() * 0.5 + 0.1
+        size: Math.random() * (this.isMobile ? 1.4 : 1.8) + 0.5,
+        speedX: (Math.random() - 0.5) * 0.35,
+        speedY: (Math.random() - 0.5) * 0.35 - 0.15,
+        alpha: Math.random() * 0.45 + 0.1
       });
     }
 
     const renderParticles = () => {
-      if (!this.animatingParticles) return;
+      if (!this.animatingParticles || !this.particleCtx) return;
       this.particleCtx.clearRect(0, 0, this.particleCanvas.width, this.particleCanvas.height);
-      
+
       this.particles.forEach((p) => {
         p.x += p.speedX;
         p.y += p.speedY;
@@ -75,7 +81,7 @@ class VantaCinematicIntro {
         this.particleCtx.fill();
       });
 
-      requestAnimationFrame(renderParticles);
+      this.animFrameId = requestAnimationFrame(renderParticles);
     };
     renderParticles();
   }
@@ -85,6 +91,14 @@ class VantaCinematicIntro {
       this.skipBtn.addEventListener('click', () => {
         this.skipInstantly();
       });
+
+      // Mobile Touch feedback
+      this.skipBtn.addEventListener('touchstart', () => {
+        this.skipBtn.style.opacity = '0.7';
+      }, { passive: true });
+      this.skipBtn.addEventListener('touchend', () => {
+        this.skipBtn.style.opacity = '1';
+      }, { passive: true });
     }
   }
 
@@ -94,7 +108,7 @@ class VantaCinematicIntro {
       return;
     }
 
-    // Disable main scroll during intro
+    // Lock page scroll & touch interaction during intro
     document.body.classList.add('intro-active');
 
     this.timeline = gsap.timeline({
@@ -102,6 +116,9 @@ class VantaCinematicIntro {
         this.finishIntro();
       }
     });
+
+    const isMobile = this.isMobile;
+    const yShift = isMobile ? 24 : 40;
 
     // SCENE 1: Total Darkness & Metallic Light Sweep (0.0s - 1.5s)
     this.timeline
@@ -122,81 +139,79 @@ class VantaCinematicIntro {
         letters,
         {
           opacity: 0,
-          y: 40,
-          scale: 0.8,
-          filter: 'blur(10px)'
+          y: yShift,
+          scale: 0.85,
+          filter: 'blur(8px)'
         },
         {
           opacity: 1,
           y: 0,
           scale: 1,
           filter: 'blur(0px)',
-          duration: 0.8,
-          stagger: 0.12,
+          duration: 0.75,
+          stagger: 0.1,
           ease: 'power3.out'
         },
         1.2
       );
 
-      // Light sweep across completed wordmark & subtle impact
+      // Light sweep across completed wordmark
       this.timeline.to('#intro-wordmark-sweep', {
         x: '150%',
-        duration: 0.8,
+        duration: 0.75,
         ease: 'power2.out'
-      }, 2.2);
+      }, 2.1);
 
       this.timeline.to('.intro-wordmark', {
-        textShadow: '0 0 40px rgba(255, 255, 255, 0.6), 0 0 80px rgba(200, 220, 255, 0.3)',
+        textShadow: '0 0 30px rgba(255, 255, 255, 0.6), 0 0 60px rgba(200, 220, 255, 0.3)',
         duration: 0.3,
         yoyo: true,
         repeat: 1
-      }, 2.4);
+      }, 2.3);
     }
 
-    // SCENE 3: 3D Sneaker Reveal (3.0s - 4.5s)
+    // SCENE 3: Hero Sneaker Visual Reveal (3.0s - 4.5s)
     this.timeline.to('.intro-wordmark', {
-      scale: 1.4,
+      scale: 1.3,
       opacity: 0,
-      filter: 'blur(15px)',
-      duration: 0.8,
+      filter: 'blur(12px)',
+      duration: 0.75,
       ease: 'power2.in'
-    }, 3.0);
+    }, 2.9);
 
-    // Fade out particle canvas gradually
+    // Fade out particle canvas
     this.timeline.to('#intro-particles', {
       opacity: 0,
-      duration: 1.0
-    }, 3.5);
+      duration: 0.8
+    }, 3.3);
 
-    // Animate sneaker 3D position if viewer exists
-    if (window.vantaViewer && window.vantaViewer.sneakerGroup) {
-      const group = window.vantaViewer.sneakerGroup;
-      group.position.set(0, -2, -5);
-      group.scale.set(0.1, 0.1, 0.1);
-
-      this.timeline.to(group.position, {
-        x: 0,
-        y: 0,
-        z: 0,
-        duration: 1.2,
-        ease: 'power3.out'
-      }, 3.2);
-
-      this.timeline.to(group.scale, {
-        x: 1,
-        y: 1,
-        z: 1,
-        duration: 1.2,
-        ease: 'back.out(1.2)'
-      }, 3.2);
+    // Animate Hero Sneaker Visual Showcase
+    const heroShowcase = document.getElementById('hero-sneaker-showcase');
+    if (heroShowcase) {
+      this.timeline.fromTo(
+        heroShowcase,
+        {
+          opacity: 0,
+          scale: 0.88,
+          y: 35
+        },
+        {
+          opacity: 1,
+          scale: 1,
+          y: 0,
+          duration: 1.2,
+          ease: 'power3.out'
+        },
+        3.1
+      );
     }
 
     // SCENE 4: Fade Intro Overlay & Reveal Homepage (4.5s - 5.0s)
     this.timeline.to(this.introOverlay, {
       opacity: 0,
-      duration: 0.6,
+      duration: 0.5,
       ease: 'power2.inOut'
-    }, 4.4);
+    }, 4.3);
   }
 
   skipInstantly() {
@@ -204,6 +219,10 @@ class VantaCinematicIntro {
       this.timeline.kill();
     }
     this.animatingParticles = false;
+    if (this.animFrameId) {
+      cancelAnimationFrame(this.animFrameId);
+    }
+
     if (this.introOverlay) {
       this.introOverlay.style.display = 'none';
       this.introOverlay.style.opacity = '0';
@@ -212,19 +231,21 @@ class VantaCinematicIntro {
     document.body.classList.remove('intro-active');
     sessionStorage.setItem('vanta_intro_seen', 'true');
 
-    if (window.vantaViewer) {
-      window.vantaViewer.isIntroMode = false;
-      if (window.vantaViewer.sneakerGroup) {
-        window.vantaViewer.sneakerGroup.position.set(0, 0, 0);
-      }
+    const heroShowcase = document.getElementById('hero-sneaker-showcase');
+    if (heroShowcase) {
+      heroShowcase.style.opacity = '1';
+      heroShowcase.style.transform = 'none';
     }
 
-    // Trigger homepage GSAP reveals
     document.dispatchEvent(new CustomEvent('vanta:introCompleted'));
   }
 
   finishIntro() {
     this.animatingParticles = false;
+    if (this.animFrameId) {
+      cancelAnimationFrame(this.animFrameId);
+    }
+
     if (this.introOverlay) {
       this.introOverlay.style.display = 'none';
       this.introOverlay.style.pointerEvents = 'none';
@@ -232,11 +253,12 @@ class VantaCinematicIntro {
     document.body.classList.remove('intro-active');
     sessionStorage.setItem('vanta_intro_seen', 'true');
 
-    if (window.vantaViewer) {
-      window.vantaViewer.isIntroMode = false;
+    const heroShowcase = document.getElementById('hero-sneaker-showcase');
+    if (heroShowcase) {
+      heroShowcase.style.opacity = '1';
+      heroShowcase.style.transform = 'none';
     }
 
-    // Trigger homepage GSAP reveals
     document.dispatchEvent(new CustomEvent('vanta:introCompleted'));
   }
 }

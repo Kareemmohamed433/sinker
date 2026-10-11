@@ -113,7 +113,7 @@ img {
 }
 
 /* ==========================================================================
-   CINEMATIC INTRO OVERLAY
+   CINEMATIC INTRO OVERLAY — MOBILE RESPONSIVE EDITION
    ========================================================================== */
 .intro-overlay {
   position: fixed;
@@ -121,6 +121,7 @@ img {
   left: 0;
   width: 100vw;
   height: 100vh;
+  height: 100dvh; /* Dynamic viewport height for mobile browser URL bars */
   background-color: #030304;
   z-index: 99999;
   display: flex;
@@ -128,6 +129,7 @@ img {
   justify-content: center;
   flex-direction: column;
   overflow: hidden;
+  touch-action: none;
 }
 
 .intro-particles-canvas {
@@ -156,25 +158,29 @@ img {
   position: relative;
   z-index: 5;
   text-align: center;
+  width: 100%;
+  padding: 0 16px;
 }
 
 .intro-wordmark {
   font-family: var(--font-display);
-  font-size: clamp(4rem, 12vw, 11rem);
+  font-size: clamp(2.4rem, 11vw, 11rem);
   font-weight: 800;
-  letter-spacing: 0.25em;
+  letter-spacing: clamp(0.12em, 2.5vw, 0.25em);
   color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
   user-select: none;
+  width: 100%;
+  max-width: 100vw;
 }
 
 .intro-logo-letter {
   display: inline-block;
   opacity: 0;
-  transform: translateY(40px);
+  transform: translateY(30px);
   background: linear-gradient(180deg, #ffffff 0%, #a8a8b8 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -208,6 +214,9 @@ img {
   backdrop-filter: blur(10px);
   background: rgba(16, 16, 20, 0.4);
   transition: var(--transition-fast);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
 }
 
 .skip-intro-btn:hover {
@@ -479,101 +488,185 @@ img {
   text-transform: uppercase;
 }
 
-/* 3D Sneaker Canvas Container — Seamless Floating Integration */
-.sneaker-3d-wrapper {
+/* ==========================================================================
+   PREMIUM HERO SNEAKER VISUAL SHOWCASE
+   ========================================================================== */
+.hero-showcase {
   position: relative;
   width: 100%;
-  height: 650px;
+  min-height: 580px;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
-  overflow: visible !important;
 }
 
-#sneaker-canvas {
-  width: 100%;
-  height: 100%;
-  outline: none;
-  cursor: grab;
-  background: transparent !important;
-  border: none !important;
-  border-radius: 0 !important;
-  box-shadow: none !important;
-  display: block;
-}
-#sneaker-canvas:active {
-  cursor: grabbing;
-}
-
-.sneaker-3d-hint {
-  position: absolute;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 16px;
-  background: rgba(16, 16, 20, 0.7);
-  backdrop-filter: blur(10px);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-full);
-  font-family: var(--font-mono);
-  font-size: 0.65rem;
-  letter-spacing: 0.15em;
-  color: var(--text-muted);
-  pointer-events: none;
-}
-
-.sneaker-loading-spinner {
+/* Ambient Radial Glow & Soft Studio Spotlight */
+.hero-glow-aura {
   position: absolute;
   top: 50%;
   left: 50%;
+  width: 520px;
+  height: 520px;
   transform: translate(-50%, -50%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 16px;
-  z-index: 5;
-}
-
-.spinner-ring {
-  width: 44px;
-  height: 44px;
-  border: 3px solid var(--border-subtle);
-  border-top-color: var(--accent-white);
   border-radius: 50%;
-  animation: spin 1s linear infinite;
+  background: radial-gradient(circle, rgba(235, 240, 255, 0.14) 0%, rgba(160, 180, 220, 0.05) 50%, transparent 72%);
+  filter: blur(48px);
+  pointer-events: none;
+  z-index: 1;
+  transition: transform 0.2s var(--ease-out);
 }
 
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-
-.sneaker-fallback-container {
-  width: 100%;
+.hero-ambient-sweep {
+  position: absolute;
+  width: 140%;
   height: 100%;
+  top: 0;
+  left: -20%;
+  background: radial-gradient(ellipse at 60% 45%, rgba(255, 255, 255, 0.035) 0%, transparent 65%);
+  pointer-events: none;
+  z-index: 1;
+  animation: vantaLightSweep 9s ease-in-out infinite alternate;
+}
+
+@keyframes vantaLightSweep {
+  0% {
+    opacity: 0.4;
+    transform: translateX(-20px);
+  }
+  100% {
+    opacity: 0.9;
+    transform: translateX(20px);
+  }
+}
+
+/* Technical Detail Badges */
+.hero-tech-badge {
+  position: absolute;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  border: 1px solid var(--border-subtle);
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  backdrop-filter: blur(10px);
+  background: rgba(14, 14, 18, 0.5);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 5;
+  user-select: none;
+}
+
+.hero-tech-badge.top-right {
+  top: 20px;
+  right: 20px;
+}
+
+.hero-tech-badge.bottom-left {
+  bottom: 20px;
+  left: 20px;
+}
+
+.tech-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #00ff88;
+  box-shadow: 0 0 8px rgba(0, 255, 136, 0.6);
+}
+
+/* Main Visual Container & Floating Animation */
+.hero-visual-card {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  max-width: 580px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  transform-style: preserve-3d;
+  transition: transform 0.15s ease-out;
+}
+
+.hero-img-wrap {
   position: relative;
+  width: 100%;
+  animation: vantaFloat 5.5s ease-in-out infinite;
 }
 
-.fallback-hero-img {
-  max-width: 80%;
-  filter: drop-shadow(0 20px 40px rgba(0,0,0,0.8));
+@keyframes vantaFloat {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
 }
 
-.fallback-badge {
-  margin-top: 16px;
+.hero-sneaker-img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  border-radius: var(--radius-lg);
+  filter: drop-shadow(0 30px 50px rgba(0, 0, 0, 0.9));
+  transition: transform 0.4s var(--ease-out), filter 0.4s var(--ease-out);
+}
+
+.hero-visual-card:hover .hero-sneaker-img {
+  filter: drop-shadow(0 35px 60px rgba(0, 0, 0, 0.95)) brightness(1.02);
+}
+
+/* Realistic Ground Contact Shadow & Surface Reflection */
+.hero-contact-shadow {
+  width: 80%;
+  height: 36px;
+  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.82) 0%, rgba(0, 0, 0, 0.4) 45%, transparent 75%);
+  filter: blur(12px);
+  margin-top: -18px;
+  position: relative;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.hero-reflection-plane {
+  width: 65%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.28), transparent);
+  margin-top: 2px;
+  filter: blur(1px);
+  opacity: 0.65;
+  pointer-events: none;
+}
+
+/* Architectural Product Tag */
+.hero-tag-pill {
+  margin-top: 20px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   font-family: var(--font-mono);
-  font-size: 0.75rem;
+  font-size: 0.65rem;
   letter-spacing: 0.2em;
   color: var(--text-muted);
+  padding: 6px 16px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-full);
+  background: rgba(12, 12, 16, 0.65);
+  backdrop-filter: blur(12px);
+  z-index: 4;
+}
+
+.pill-code {
+  color: var(--accent-white);
+  font-weight: 700;
+}
+
+.pill-divider {
+  color: var(--text-dim);
 }
 
 /* ==========================================================================

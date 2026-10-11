@@ -1,28 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>VANTA — Premium 3D Sneaker E-Commerce</title>
-  <meta name="description" content="Cinematic luxury sneaker e-commerce website for VANTA. Built to break the ordinary with 3D footwear interactive experiences and premium street culture design." />
+  <title>VANTA — Premium Luxury Sneaker E-Commerce</title>
+  <meta name="description"
+    content="Cinematic luxury sneaker e-commerce website for VANTA. Built to break the ordinary with high-contrast obsidian aesthetic language and premium street culture design." />
   <meta name="theme-color" content="#070709" />
 
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@500;700;800&display=swap" rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@500;700;800&display=swap"
+    rel="stylesheet" />
 
   <!-- External Libraries (CDNs) -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
 
   <!-- Custom Stylesheets -->
   <link rel="stylesheet" href="css/styles.css" />
   <link rel="stylesheet" href="css/responsive.css" />
 </head>
+
 <body class="intro-active">
 
   <!-- ==========================================================================
@@ -96,11 +99,16 @@
     </div>
     <div class="drawer-body">
       <ul class="mobile-nav-links" style="list-style: none; display: flex; flex-direction: column; gap: 24px;">
-        <li><a href="#hero" class="mobile-nav-link" style="font-family: var(--font-display); font-size: 1.5rem;">Home</a></li>
-        <li><a href="#catalog" class="mobile-nav-link" style="font-family: var(--font-display); font-size: 1.5rem;">New Arrivals</a></li>
-        <li><a href="#catalog" class="mobile-nav-link" style="font-family: var(--font-display); font-size: 1.5rem;">Sneakers</a></li>
-        <li><a href="#collections" class="mobile-nav-link" style="font-family: var(--font-display); font-size: 1.5rem;">Collections</a></li>
-        <li><a href="#brand-story" class="mobile-nav-link" style="font-family: var(--font-display); font-size: 1.5rem;">About VANTA</a></li>
+        <li><a href="#hero" class="mobile-nav-link"
+            style="font-family: var(--font-display); font-size: 1.5rem;">Home</a></li>
+        <li><a href="#catalog" class="mobile-nav-link" style="font-family: var(--font-display); font-size: 1.5rem;">New
+            Arrivals</a></li>
+        <li><a href="#catalog" class="mobile-nav-link"
+            style="font-family: var(--font-display); font-size: 1.5rem;">Sneakers</a></li>
+        <li><a href="#collections" class="mobile-nav-link"
+            style="font-family: var(--font-display); font-size: 1.5rem;">Collections</a></li>
+        <li><a href="#brand-story" class="mobile-nav-link"
+            style="font-family: var(--font-display); font-size: 1.5rem;">About VANTA</a></li>
       </ul>
     </div>
   </div>
@@ -110,7 +118,7 @@
        ========================================================================== -->
   <section id="hero" class="hero-section">
     <div class="hero-container">
-      
+
       <!-- Hero Copy -->
       <div class="hero-content gsap-fade-up">
         <div class="hero-subtitle-badge">
@@ -145,18 +153,36 @@
         </div>
       </div>
 
-      <!-- 3D Sneaker Canvas Showcase -->
-      <div id="sneaker-3d-container" class="sneaker-3d-wrapper">
-        <div id="sneaker-loading" class="sneaker-loading-spinner">
-          <div class="spinner-ring"></div>
-          <span id="sneaker-loading-text" class="hero-subtitle-badge" style="margin-bottom:0;">INITIALIZING 3D SNEAKER...</span>
+      <!-- Premium Hero Sneaker Visual Showcase -->
+      <div id="hero-sneaker-showcase" class="hero-showcase">
+        <!-- Ambient Spotlight & Radial Glow Aura -->
+        <div class="hero-glow-aura"></div>
+        <div class="hero-ambient-sweep"></div>
+
+        <!-- Technical Corner Accents & Editorial Badges -->
+        <div class="hero-tech-badge top-right">
+          <span class="tech-dot"></span>
+          <span>EDITION 01 // CORE OBSIDIAN</span>
+        </div>
+        <div class="hero-tech-badge bottom-left">
+          <span>LATERAL CARBON SHANK V3</span>
         </div>
 
-        <canvas id="sneaker-canvas"></canvas>
+        <!-- Main Product Visual Container with Parallax & Floating Motion -->
+        <div class="hero-visual-card" id="hero-visual-card">
+          <div class="hero-img-wrap">
+            <img src="assets/images/vanta_core.jpg" alt="VANTA Core Luxury Obsidian Sneaker" class="hero-sneaker-img" id="hero-sneaker-img" />
+          </div>
+          <!-- Realistic Ground Contact Reflection & Soft Shadow -->
+          <div class="hero-contact-shadow"></div>
+          <div class="hero-reflection-plane"></div>
+        </div>
 
-        <div class="sneaker-3d-hint">
-          <i data-lucide="move-3d"></i>
-          <span>DRAG TO ROTATE 3D SNEAKER</span>
+        <!-- Technical Detail Pill -->
+        <div class="hero-tag-pill">
+          <span class="pill-code">VN-ARCHIVE</span>
+          <span class="pill-divider">/</span>
+          <span class="pill-title">PRECISION ENGINEERED</span>
         </div>
       </div>
 
@@ -170,7 +196,8 @@
     <div class="section-header gsap-fade-up">
       <span class="section-tag">THE COLLECTION</span>
       <h2 class="section-title">FIND YOUR NEXT ESSENTIAL.</h2>
-      <p class="section-description">Precision craftsmanship meet futuristic streetwear silhouettes. Select your pair below.</p>
+      <p class="section-description">Precision craftsmanship meet futuristic streetwear silhouettes. Select your pair
+        below.</p>
     </div>
 
     <!-- Filter Controls Bar -->
@@ -228,7 +255,8 @@
     </div>
 
     <div id="catalog-empty-state" class="catalog-empty-state">
-      <i data-lucide="package-search" style="width: 48px; height: 48px; color: var(--text-dim); margin-bottom: 16px;"></i>
+      <i data-lucide="package-search"
+        style="width: 48px; height: 48px; color: var(--text-dim); margin-bottom: 16px;"></i>
       <h3 style="font-family: var(--font-display); margin-bottom: 8px;">NO MATCHING SNEAKERS FOUND</h3>
       <p style="color: var(--text-muted); margin-bottom: 24px;">Try adjusting your filters or search query.</p>
       <button type="button" class="btn btn-outline reset-filters-btn">RESET ALL FILTERS</button>
@@ -245,7 +273,9 @@
           <span class="section-tag">BRAND PHILOSOPHY</span>
           <h2 class="story-title">MADE TO MOVE DIFFERENT.</h2>
           <p class="story-lead">VANTA is built around movement, individuality, and modern street culture.</p>
-          <p class="story-text">Every sneaker model in our archive is designed with meticulous geometry, luxury materials, and carbon-reinforced soles. We reject generic mass-market design in favor of high-contrast, obsidian aesthetic language.</p>
+          <p class="story-text">Every sneaker model in our archive is designed with meticulous geometry, luxury
+            materials, and carbon-reinforced soles. We reject generic mass-market design in favor of high-contrast,
+            obsidian aesthetic language.</p>
 
           <div class="story-pillars">
             <div class="pillar-card">
@@ -361,7 +391,8 @@
         <p class="footer-brand-desc">Architectural footwear engineered for street culture and kinetic movement.</p>
 
         <form id="newsletter-form" class="footer-newsletter-form">
-          <input type="email" class="footer-newsletter-input" placeholder="Enter your email for VIP drops..." required />
+          <input type="email" class="footer-newsletter-input" placeholder="Enter your email for VIP drops..."
+            required />
           <button type="submit" class="btn btn-accent btn-sm">JOIN</button>
         </form>
       </div>
@@ -448,7 +479,9 @@
           </button>
         </div>
 
-        <ul id="qv-features-list" style="margin-top: 24px; font-size: 0.75rem; color: var(--text-muted); list-style: none; display: flex; flex-direction: column; gap: 6px;"></ul>
+        <ul id="qv-features-list"
+          style="margin-top: 24px; font-size: 0.75rem; color: var(--text-muted); list-style: none; display: flex; flex-direction: column; gap: 6px;">
+        </ul>
       </div>
     </div>
   </div>
@@ -464,10 +497,13 @@
     </div>
 
     <div class="drawer-body">
-      <div id="cart-empty-state" style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; text-align: center;">
-        <i data-lucide="shopping-bag" style="width: 56px; height: 56px; color: var(--text-dim); margin-bottom: 16px;"></i>
+      <div id="cart-empty-state"
+        style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; text-align: center;">
+        <i data-lucide="shopping-bag"
+          style="width: 56px; height: 56px; color: var(--text-dim); margin-bottom: 16px;"></i>
         <h4 style="font-family: var(--font-display); margin-bottom: 8px;">YOUR BAG IS EMPTY</h4>
-        <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 24px;">Explore our collection to find your pair.</p>
+        <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 24px;">Explore our collection to find
+          your pair.</p>
         <a href="#catalog" class="btn btn-outline close-cart-btn">SHOP COLLECTION</a>
       </div>
 
@@ -476,7 +512,8 @@
 
     <div id="cart-footer" class="drawer-footer">
       <form id="cart-promo-form" style="display: flex; gap: 8px; margin-bottom: 16px;">
-        <input type="text" id="promo-input" placeholder="Promo code (e.g. VANTA10)" class="form-input" style="padding: 8px 12px; font-size: 0.8rem;" />
+        <input type="text" id="promo-input" placeholder="Promo code (e.g. VANTA10)" class="form-input"
+          style="padding: 8px 12px; font-size: 0.8rem;" />
         <button type="submit" class="btn btn-sm btn-outline">APPLY</button>
       </form>
 
@@ -507,10 +544,12 @@
     </div>
 
     <div class="drawer-body">
-      <div id="wishlist-empty-state" style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; text-align: center;">
+      <div id="wishlist-empty-state"
+        style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; text-align: center;">
         <i data-lucide="heart" style="width: 56px; height: 56px; color: var(--text-dim); margin-bottom: 16px;"></i>
         <h4 style="font-family: var(--font-display); margin-bottom: 8px;">YOUR WISHLIST IS EMPTY</h4>
-        <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 24px;">Save your favorite sneakers for later.</p>
+        <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 24px;">Save your favorite sneakers for
+          later.</p>
         <a href="#catalog" class="btn btn-outline close-wishlist-btn">EXPLORE SNEAKERS</a>
       </div>
 
@@ -529,12 +568,15 @@
       <!-- Checkout Form View -->
       <div id="checkout-form-container">
         <h2 style="font-family: var(--font-display); font-size: 1.8rem; margin-bottom: 8px;">VANTA DEMO CHECKOUT</h2>
-        <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 32px;">This is a demonstration checkout. No actual payments or credit cards are processed.</p>
+        <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 32px;">This is a demonstration checkout.
+          No actual payments or credit cards are processed.</p>
 
         <form id="checkout-form">
           <div class="checkout-grid">
             <div>
-              <h4 style="font-family: var(--font-mono); font-size: 0.8rem; letter-spacing: 0.15em; color: var(--accent-white); margin-bottom: 16px;">DELIVERY INFORMATION</h4>
+              <h4
+                style="font-family: var(--font-mono); font-size: 0.8rem; letter-spacing: 0.15em; color: var(--accent-white); margin-bottom: 16px;">
+                DELIVERY INFORMATION</h4>
 
               <div class="form-group">
                 <label class="form-label">FULL NAME *</label>
@@ -554,7 +596,8 @@
 
               <div class="form-group">
                 <label class="form-label">STREET ADDRESS *</label>
-                <input type="text" id="checkout-address" class="form-input" placeholder="Building, Street, District" required />
+                <input type="text" id="checkout-address" class="form-input" placeholder="Building, Street, District"
+                  required />
               </div>
 
               <div class="form-group">
@@ -564,10 +607,13 @@
             </div>
 
             <div>
-              <h4 style="font-family: var(--font-mono); font-size: 0.8rem; letter-spacing: 0.15em; color: var(--accent-white); margin-bottom: 16px;">ORDER SUMMARY</h4>
+              <h4
+                style="font-family: var(--font-mono); font-size: 0.8rem; letter-spacing: 0.15em; color: var(--accent-white); margin-bottom: 16px;">
+                ORDER SUMMARY</h4>
 
               <div class="checkout-summary-box">
-                <div id="checkout-summary-items" style="max-height: 220px; overflow-y: auto; margin-bottom: 16px;"></div>
+                <div id="checkout-summary-items" style="max-height: 220px; overflow-y: auto; margin-bottom: 16px;">
+                </div>
 
                 <div class="cart-subtotal-row">
                   <span>SUBTOTAL</span>
@@ -577,7 +623,8 @@
                   <span>SHIPPING</span>
                   <span style="color: #00ff88; font-weight: 700;">FREE EXPRESS</span>
                 </div>
-                <div class="cart-total-row" style="margin-top: 16px; border-top: 1px solid var(--border-subtle); padding-top: 16px;">
+                <div class="cart-total-row"
+                  style="margin-top: 16px; border-top: 1px solid var(--border-subtle); padding-top: 16px;">
                   <span>TOTAL</span>
                   <span id="checkout-total">EGP 0</span>
                 </div>
@@ -593,24 +640,31 @@
 
       <!-- Confirmation Screen View -->
       <div id="checkout-confirmation" style="display: none; text-align: center; padding: 40px 20px;">
-        <div style="width: 64px; height: 64px; border-radius: 50%; background: rgba(0, 255, 136, 0.1); border: 1px solid #00ff88; color: #00ff88; display: flex; align-items: center; justify-content: center; margin: 0 auto 24px auto;">
+        <div
+          style="width: 64px; height: 64px; border-radius: 50%; background: rgba(0, 255, 136, 0.1); border: 1px solid #00ff88; color: #00ff88; display: flex; align-items: center; justify-content: center; margin: 0 auto 24px auto;">
           <i data-lucide="check" style="width: 32px; height: 32px;"></i>
         </div>
 
         <h2 style="font-family: var(--font-display); font-size: 2.2rem; margin-bottom: 8px;">ORDER CONFIRMED</h2>
-        <p style="color: var(--text-muted); margin-bottom: 24px;">Thank you for testing the VANTA luxury sneaker experience.</p>
+        <p style="color: var(--text-muted); margin-bottom: 24px;">Thank you for testing the VANTA luxury sneaker
+          experience.</p>
 
-        <div style="max-width: 480px; margin: 0 auto 32px auto; padding: 24px; background: var(--bg-dark); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); text-align: left;">
-          <div style="display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 0.8rem; margin-bottom: 16px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 12px;">
+        <div
+          style="max-width: 480px; margin: 0 auto 32px auto; padding: 24px; background: var(--bg-dark); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); text-align: left;">
+          <div
+            style="display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 0.8rem; margin-bottom: 16px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 12px;">
             <span>REF: <strong id="confirm-order-ref" style="color: var(--accent-white);">VN-000000</strong></span>
             <span id="confirm-order-date" style="color: var(--text-dim);">DATE</span>
           </div>
 
-          <div id="confirm-customer-info" style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;"></div>
+          <div id="confirm-customer-info" style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">
+          </div>
 
-          <div id="confirm-items-list" style="font-size: 0.85rem; margin-bottom: 16px; display: flex; flex-direction: column; gap: 8px;"></div>
+          <div id="confirm-items-list"
+            style="font-size: 0.85rem; margin-bottom: 16px; display: flex; flex-direction: column; gap: 8px;"></div>
 
-          <div style="display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 1.1rem; font-weight: 700; border-top: 1px solid var(--border-subtle); padding-top: 12px; color: var(--accent-white);">
+          <div
+            style="display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 1.1rem; font-weight: 700; border-top: 1px solid var(--border-subtle); padding-top: 12px; color: var(--accent-white);">
             <span>FINAL TOTAL:</span>
             <span id="confirm-order-total">EGP 0</span>
           </div>
@@ -633,7 +687,8 @@
     <div style="padding: 40px;">
       <h3 style="font-family: var(--font-display); margin-bottom: 16px;">SEARCH VANTA ARCHIVE</h3>
       <div class="catalog-search-wrap">
-        <input type="text" id="header-search-input" class="catalog-search-input" placeholder="Type sneaker model (e.g. Core, Shadow, Phantom)..." />
+        <input type="text" id="header-search-input" class="catalog-search-input"
+          placeholder="Type sneaker model (e.g. Core, Shadow, Phantom)..." />
         <i data-lucide="search" class="search-icon-inside"></i>
       </div>
     </div>
@@ -641,7 +696,6 @@
 
   <!-- Custom App Scripts -->
   <script src="js/products.js"></script>
-  <script src="js/sneaker3d.js"></script>
   <script src="js/intro.js"></script>
   <script src="js/cart.js"></script>
   <script src="js/wishlist.js"></script>
@@ -650,4 +704,5 @@
   <script src="js/main.js"></script>
 
 </body>
+
 </html>

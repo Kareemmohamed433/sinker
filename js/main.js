@@ -18,16 +18,14 @@ class VantaApplication {
     this.initSmoothScrolls();
     this.initNewsletterForm();
     this.initScrollAnimations();
+    this.initHeroParallax();
 
     // Bootstrap Sub-Modules when DOM ready
     window.addEventListener('DOMContentLoaded', () => {
-      // 1. Instantiate 3D Sneaker
-      window.vantaViewer = new Sneaker3DViewer('sneaker-3d-container');
-
-      // 2. Instantiate Intro
+      // 1. Instantiate Intro
       window.vantaIntro = new VantaCinematicIntro();
 
-      // 3. Instantiate E-Commerce Core
+      // 2. Instantiate E-Commerce Core
       window.vantaCart = new VantaCart();
       window.vantaWishlist = new VantaWishlist();
       window.vantaCatalog = new VantaCatalog();
@@ -38,6 +36,52 @@ class VantaApplication {
         window.lucide.createIcons();
       }
     });
+  }
+
+  initHeroParallax() {
+    const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    if (isTouch) return;
+
+    const showcase = document.getElementById('hero-sneaker-showcase');
+    const visualCard = document.getElementById('hero-visual-card');
+    const aura = document.querySelector('.hero-glow-aura');
+    if (!showcase || !visualCard) return;
+
+    let targetRotX = 0, targetRotY = 0;
+    let currentRotX = 0, currentRotY = 0;
+    let targetTransX = 0, targetTransY = 0;
+    let currentTransX = 0, currentTransY = 0;
+
+    window.addEventListener('mousemove', (e) => {
+      const rect = showcase.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
+
+      const normX = (e.clientX - centerX) / (window.innerWidth / 2);
+      const normY = (e.clientY - centerY) / (window.innerHeight / 2);
+
+      // Subtle, refined 3D parallax angles (max 6 degrees tilt)
+      targetRotY = normX * 6;
+      targetRotX = -normY * 6;
+      targetTransX = normX * 10;
+      targetTransY = normY * 10;
+    });
+
+    const animateParallax = () => {
+      currentRotX += (targetRotX - currentRotX) * 0.08;
+      currentRotY += (targetRotY - currentRotY) * 0.08;
+      currentTransX += (targetTransX - currentTransX) * 0.08;
+      currentTransY += (targetTransY - currentTransY) * 0.08;
+
+      visualCard.style.transform = `perspective(1000px) rotateX(${currentRotX.toFixed(2)}deg) rotateY(${currentRotY.toFixed(2)}deg) translate3d(${currentTransX.toFixed(2)}px, ${currentTransY.toFixed(2)}px, 0)`;
+
+      if (aura) {
+        aura.style.transform = `translate3d(${(currentTransX * 1.5).toFixed(2)}px, ${(currentTransY * 1.5).toFixed(2)}px, 0)`;
+      }
+
+      requestAnimationFrame(animateParallax);
+    };
+    animateParallax();
   }
 
   createToastContainer() {
